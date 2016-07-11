@@ -1,0 +1,22 @@
+UPDATE nibrs_arrests_13m SET betting = 1, gambling_general = 1 WHERE nibrs_arrests_13m.ucr_offense_code = 391 or nibrs_arrests_13m.ucr_offense_code1 = 391 or nibrs_arrests_13m.ucr_offense_code2 = 391 or nibrs_arrests_13m.ucr_offense_code3 = 391;
+UPDATE nibrs_arrests_13m SET operating_gambling = 1, gambling_general = 1 WHERE nibrs_arrests_13m.ucr_offense_code = 392 or nibrs_arrests_13m.ucr_offense_code1 = 392 or nibrs_arrests_13m.ucr_offense_code2 = 392 or nibrs_arrests_13m.ucr_offense_code3 = 392;
+UPDATE nibrs_arrests_13m SET gambling_equipment = 1, gambling_general = 1 WHERE nibrs_arrests_13m.ucr_offense_code = 393 or nibrs_arrests_13m.ucr_offense_code1 = 393 or nibrs_arrests_13m.ucr_offense_code2 = 393 or nibrs_arrests_13m.ucr_offense_code3 = 393;
+UPDATE nibrs_arrests_13m SET sports_tampering = 1, gambling_general = 1 WHERE nibrs_arrests_13m.ucr_offense_code = 394 or nibrs_arrests_13m.ucr_offense_code1 = 394 or nibrs_arrests_13m.ucr_offense_code2 = 394 or nibrs_arrests_13m.ucr_offense_code3 = 394;
+
+UPDATE nibrs_arrests_13m SET murder = 1, homicide_general = 1 WHERE nibrs_arrests_13m.ucr_offense_code = 91 or nibrs_arrests_13m.ucr_offense_code1 = 91 or nibrs_arrests_13m.ucr_offense_code2 = 91 or nibrs_arrests_13m.ucr_offense_code3 = 91;
+UPDATE nibrs_arrests_13m SET negligent_manslaughter = 1, homicide_general = 1 WHERE nibrs_arrests_13m.ucr_offense_code = 92 or nibrs_arrests_13m.ucr_offense_code1 = 92 or nibrs_arrests_13m.ucr_offense_code2 = 92 or nibrs_arrests_13m.ucr_offense_code3 = 92;
+UPDATE nibrs_arrests_13m SET justifiable_homicide = 1, homicide_general = 1 WHERE nibrs_arrests_13m.ucr_offense_code = 93 or nibrs_arrests_13m.ucr_offense_code1 = 93 or nibrs_arrests_13m.ucr_offense_code2 = 93 or nibrs_arrests_13m.ucr_offense_code3 = 93;
+
+UPDATE nibrs_arrests_13m SET sex_trafficking = 1, trafficking_general = 1 WHERE nibrs_arrests_13m.ucr_offense_code = 641 or nibrs_arrests_13m.ucr_offense_code1 = 641 or nibrs_arrests_13m.ucr_offense_code2 = 641 or nibrs_arrests_13m.ucr_offense_code3 = 641;
+UPDATE nibrs_arrests_13m SET labor_trafficking = 1, trafficking_general = 1 WHERE nibrs_arrests_13m.ucr_offense_code = 642 or nibrs_arrests_13m.ucr_offense_code1 = 642 or nibrs_arrests_13m.ucr_offense_code2 = 642 or nibrs_arrests_13m.ucr_offense_code3 = 642;
+
+UPDATE nibrs_arrests_13m SET kidnapping = 1 WHERE nibrs_arrests_13m.ucr_offense_code = 100 or nibrs_arrests_13m.ucr_offense_code1 = 100 or nibrs_arrests_13m.ucr_offense_code2 = 100 or nibrs_arrests_13m.ucr_offense_code3 = 100;
+
+UPDATE nibrs_arrests_13m SET pocket_picking = 1, theft_general = 1 WHERE nibrs_arrests_13m.ucr_offense_code = 231 or nibrs_arrests_13m.ucr_offense_code1 = 231 or nibrs_arrests_13m.ucr_offense_code2 = 231 or nibrs_arrests_13m.ucr_offense_code3 = 231;
+UPDATE nibrs_arrests_13m SET purse_snatching = 1, theft_general = 1 WHERE nibrs_arrests_13m.ucr_offense_code = 232 or nibrs_arrests_13m.ucr_offense_code1 = 232 or nibrs_arrests_13m.ucr_offense_code2 = 232 or nibrs_arrests_13m.ucr_offense_code3 = 232;
+UPDATE nibrs_arrests_13m SET shoplifting = 1, theft_general = 1 WHERE nibrs_arrests_13m.ucr_offense_code = 233 or nibrs_arrests_13m.ucr_offense_code1 = 233 or nibrs_arrests_13m.ucr_offense_code2 = 233 or nibrs_arrests_13m.ucr_offense_code3 = 233;
+UPDATE nibrs_arrests_13m SET building_theft = 1, theft_general = 1 WHERE nibrs_arrests_13m.ucr_offense_code = 234 or nibrs_arrests_13m.ucr_offense_code1 = 234 or nibrs_arrests_13m.ucr_offense_code2 = 234 or nibrs_arrests_13m.ucr_offense_code3 = 234;
+UPDATE nibrs_arrests_13m SET theft_from_machine = 1, theft_general = 1 WHERE nibrs_arrests_13m.ucr_offense_code = 235 or nibrs_arrests_13m.ucr_offense_code1 = 235 or nibrs_arrests_13m.ucr_offense_code2 = 235 or nibrs_arrests_13m.ucr_offense_code3 = 235;
+UPDATE nibrs_arrests_13m SET theft_from_auto = 1, theft_general = 1 WHERE nibrs_arrests_13m.ucr_offense_code = 236 or nibrs_arrests_13m.ucr_offense_code1 = 236 or nibrs_arrests_13m.ucr_offense_code2 = 236 or nibrs_arrests_13m.ucr_offense_code3 = 236;
+UPDATE nibrs_arrests_13m SET auto_parts_theft = 1, theft_general = 1 WHERE nibrs_arrests_13m.ucr_offense_code = 237 or nibrs_arrests_13m.ucr_offense_code1 = 237 or nibrs_arrests_13m.ucr_offense_code2 = 237 or nibrs_arrests_13m.ucr_offense_code3 = 237;
+UPDATE nibrs_arrests_13m SET other_theft = 1, theft_general = 1 WHERE nibrs_arrests_13m.ucr_offense_code = 238 or nibrs_arrests_13m.ucr_offense_code1 = 238 or nibrs_arrests_13m.ucr_offense_code2 = 238 or nibrs_arrests_13m.ucr_offense_code3 = 238;

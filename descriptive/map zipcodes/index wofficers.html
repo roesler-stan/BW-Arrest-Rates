@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+
+<style>
+
+    svg {
+      font: 10px sans-serif;
+    }
+
+    .zip {
+      fill: none;
+      stroke: #CCC;
+      stroke-width: .35px;
+    }
+
+    .key path {
+      display: none;
+    }
+
+    .key line {
+      stroke: #000;
+      shape-rendering: crispEdges;
+    }
+
+</style>
+
+<body>
+  <script src="http://d3js.org/d3.v3.min.js"></script>
+  <script src="http://d3js.org/queue.v1.min.js"></script>
+  <script src="http://d3js.org/topojson.v1.min.js"></script>
+
+  <script>
+
+    var width = 960,
+    height = 500
+    scale_range = 400;
+
+    var color = d3.scale.threshold()
+    .domain([25, 50, 75, 95])
+    .range(['#ffc30f', '#ff5733', '#c70039', '#900c3f', '#581845']);
+    // .range(["#581845", "#900c3f", "#c70039", "#ff5733", "#ffc30f"]);
+
+    var threshold = d3.scale.threshold()
+    .domain([25, 50, 75, 95])
+    .range(['#ffc30f', '#ff5733', '#c70039', '#900c3f', '#581845']);
+
+    var path = d3.geo.path();
+
+    var svg = d3.select("body").append("svg")
+    .attr("width", width)
+    // leaving extra room for notes
+    .attr("height", height + 15);
+
+    queue()
+    .defer(d3.json, "zips_us_topo.json")
+    .defer(d3.tsv, "lemas13_wofficers_percent.tsv")
+    .await(ready);
+
+    function ready(error, us, lemas13_wofficers_percent) {
+      
+      var rateById = {};
+
+      lemas13_wofficers_percent.forEach(function(d) { rateById[d.id] = +d.rate; });
+
+      svg.append("g")
+          .attr("class", "zip")
+        .selectAll("path")
+          .data(topojson.feature(us, us.objects.zip_codes_for_the_usa).features)
+        .enter().append("path")
+        .attr("d", path)
+        .style("fill", function(d) { return color(rateById[d.properties.zip]); } ); 
+    }
+
+    // A position encoding for the key only.
+    var x = d3.scale.linear()
+        .domain([0, 100])
+        .range([0, scale_range]);
+
+    var xAxis = d3.svg.axis()
+        .scale(x)
+        .orient("bottom")
+        .tickSize(13)
+        .tickValues(threshold.domain())
+        .tickFormat(function(d) { return d });
+
+    var legend = d3.select("body").append("svg")
+        .attr("width", width)
+        .attr("height", height);
+
+    var g = legend.append("g")
+        .attr("class", "key")
+        .attr("transform", "translate(" + (width - scale_range) / 2 + "," + 50 + ")");
+
+    g.selectAll("rect")
+        .data(threshold.range().map(function(color) {
+          var d = threshold.invertExtent(color);
+          if (d[0] == null) d[0] = x.domain()[0];
+          if (d[1] == null) d[1] = x.domain()[1];
+          return d;
+        }))
+      .enter().append("rect")
+        .attr("height", 8)
+        .attr("x", function(d) { return x(d[0]); })
+        .attr("width", function(d) { return x(d[1]) - x(d[0]); })
+        .style("fill", function(d) { return threshold(d[0]); });
+
+    g.call(xAxis).append("text")
+        .attr("class", "caption")
+        .attr("y", -6)
+        .text("Percent Officers White");
+
+    // Title
+    svg.append("text")
+            .attr("x", (width / 2))
+            .attr("y", 20)
+            .attr("text-anchor", "middle")  
+            .style("font-size", "20px") 
+            .text("Percent Officers White");
+
+    svg.append("text")
+        .attr("x", width * 2.5 / 4)
+        .attr("y", height + 10)
+        .attr("text-anchor", "left")  
+        .style("font-size", "12px") 
+        .text("LEMAS 2013 agencies by zip code");
+
+  </script>
+</body>

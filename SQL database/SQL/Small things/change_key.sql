@@ -1,0 +1,1 @@
+﻿ALTER TABLE charges_m1 ADD FOREIGN KEY (arrest_id) REFERENCES arrests_m1 (arrest_id) ON DELETE CASCADE;

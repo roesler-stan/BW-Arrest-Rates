@@ -1,0 +1,5 @@
+﻿--acs_counties_13_rpl_nao
+SELECT * FROM acs_counties_13_rpl_na
+LEFT OUTER JOIN
+nibrs_offenders_12m_counties
+ON acs_counties_13_rpl_na.acs_county_no = nibrs_offenders_12m_counties.offenders_county_no

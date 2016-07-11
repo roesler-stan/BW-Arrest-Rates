@@ -1,0 +1,21 @@
+# Corn 2-4
+cd /farmshare/user_data/roesler/Mugshots
+# screen -S name
+
+python
+import mugshots_profiles as mp
+
+mp.main('July10', states = ['Alabama','Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'District of Columbia'])
+mp.main('July10', states = ['Florida', 'Georgia'])
+mp.main('July10', states = ['Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas'])
+
+# Second Corn machine
+mp.main('July10', states = ['Kentucky', 'Louisiana', 'Maine'])
+mp.main('July10', states = ['Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi'])
+mp.main('July10', states = ['Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York'])
+
+# Third Corn Machine
+mp.main('July10', states = ['North Carolina', 'North Dakota', 'Ohio'])
+mp.main('July10', states = ['Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee'])
+mp.main('July10', states = ['Texas'])
+mp.main('July10', states = ['Utah', 'Vermont', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'])

@@ -1,0 +1,7 @@
+label(offenders_data$arrested) <- "Arrested"
+label(offenders_data$black_not_white) <- "Black (ref = White)"
+label(offenders_data$male_officers_percent) <- "% Officers Male"
+label(offenders_data$ftsworn) <- "# Full-Time Officers"
+label(offenders_data$bdgt_ttl) <- "Total Budget"
+label(offenders_data$com_bt) <- "CP Beats"
+label(offenders_data$tech_typ_vpat) <- "Body Cameras"

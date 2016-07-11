@@ -1,0 +1,1 @@
+install.packages('R2OpenBUGS',type='source')

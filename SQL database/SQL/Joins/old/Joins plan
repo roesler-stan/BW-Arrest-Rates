@@ -1,0 +1,15 @@
+Want:
+	ACS race
+	governor
+	NIBRS
+	UCR
+	unemployment
+	LEMAS
+
+
+Tables using:
+	lemas_counties
+	acs_gov
+	acs_county_emp_0913
+	nibrs_counties
+	ucr_counties

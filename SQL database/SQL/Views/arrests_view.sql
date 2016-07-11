@@ -1,0 +1,25 @@
+﻿CREATE VIEW arrests_view AS
+(SELECT 
+  at.arrest_type arrest_type,
+  at.ucr_offense arrest_ucr_offense,
+  at.gender arrest_gender,
+  at.state_no arrest_state_no,
+  at.seqno arrest_seqno,
+  at.age arrest_age,
+  at.multiple_arrests arrest_multiple_arrests,
+  at.state arrest_state,
+  at.record_type arrest_record_type,
+  at.incident arrest_incident,
+  at.transaction_number arrest_transaction_number,
+  at.disposition_u18 arrest_disposition_u18,
+  at.race arrest_race,
+  at.ori arrest_ori,
+  at.resident_status arrest_resident_status,
+  at.number_records arrest_number_records,
+  at.ethnicity arrest_ethnicity,
+  at.incident_date arrest_incident_date,
+  at.arrest_date arrest_date,
+  at.internal_offender_id arrest_internal_offender_id,
+  at.ori9 arrest_ori9,
+  at.county_no arrest_county_no
+FROM nibrs_arrests_12m_county_nd as at);

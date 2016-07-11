@@ -1,0 +1,94 @@
+Guide for making datasets
+
+Cleaning NIBRS offenders and offenders-arrestees files
+	merge files using merge_nibrs.py and psql guide
+	Code charges in SQL (in NIBRS_2013 directory, using psql/NIBRS 2013.sql instructions)
+	Setup_combined.py (which calls on code_offenses.py, Setup_NIBRS.py, and clean_nibrs_offenders_arrestees.py)
+	make subset with only desired columns
+
+Mugshots.com Scraping
+	Run 1: bsoup_M(working) - scrape HTML pages from website
+	Run 2: Scraping/mugshots_profiles.py, Scraping/mugshots_constants.py
+
+	Mugshots/create_M.py - parse HTML into dictionaries and pickle files - run with clean_all.sh
+	clean_corn/clean_all.sh - open screens and call clean_STATE.py for given states
+	clean_corn/clean_ALDC.py ... - use create_M.py for given states
+
+	Mugshots/clean_datasets - use clean_M, clean_charges, and general_clean to make CSV files
+	Mugshots/clean_M - combine messy columns, add county_no info, make arrestee dataset
+	Mugshots/clean_charges - make charges dataset
+	general_clean - clean up data, e.g. classify gender - coding I will hopefully not change much
+	
+SQL Merging
+	Mugshots.com dataset (mugshots_may2015_male_acs_rpnai and mugshots_july2015_male_acs_rpl_naois)
+		july2015_id_counts - Make table of counties' arrest counts for unaltered data (men and women)
+		mugshots_july_male_1415 - Throw out rows if gender is female, county_no column is missing, or year isn't 2014 or 2015
+		mugshots_charges_july2015 - Code charges
+		view called july_charges - Group charges by arrest id
+		mugshots_july_male_1415_ac - Left outer join charges view to arrests table
+		mugshots_july2015_male_acs_rpl_naois - Left outer join county-level ACS etc. and NIBRS datasets to arrest records
+		Add column names in analysis code - and later in cleaning code
+
+	County-level dataset (acs_counties_13_rpl_noa)
+		Ingredients: acs_counties_13 - crosswalk_region_pres12 - lemas13_counties - nibrs_counties - nibrs_arrests_counties
+		1. make acs_counties_13
+		2. make crosswalk_region
+		3. make crosswalk_region_pres12 (add region and pres12 voting)
+		4. make acs_counties_13_region_pres12
+		5. make acs_counties_13_rp_lemas (add lemas)
+		6. make acs_counties_13_rpl_na (add nibrs_arrests_12m_counties)
+		7. make acs_counties_13_rpl_nai (add may_id_counts)
+		7. make acs_counties_13_rpl_naio (add nibrs_oo_12m_counties)
+
+	NIBRS 2013 Arrests counties file (nibrs_arrests_13m_counties)
+
+	NIBRS 2013 Offenders counties file (nibrs_offenders_13m_counties)
+		1. nibrs_offenders_13
+		2. nibrs_offenders_13_male - copy nibrs_offenders_13 and only include men
+
+	NIBRS 2013 Offenders-Arrestees file (nibrs_offenders_arrestees_13_lemas_acs_pres12.csv)
+		append_nibrs.py to combine raw NIBRS datasets
+		psql NIBRS 2013.sql file commands
+		Setup_combined.py, which uses Setup_ACS_LEMAS.py, clean_offenses.py, and clean_nibrs_offenders_arrestees.py
+
+	NIBRS 2012 Arrests file (nibrs_arrests_12m_counties)
+		1. nibrs_arrests_12
+		2. nibrs_arrests_12_male - copy nibrs_arrests_12 and drop females
+		3. nibrs_arrests_12m_county - add county_no to nibrs_arrests_12_male
+		4. nibrs_arrests_12m_county - code charges
+		5. nibrs_12m_arrests_counties - group by county_no
+
+	NIBRS 2012 Offenders - Offenses file (nibrs_oo_12m_counties)
+		1. nibrs_offenders_12
+		2. nibrs_offenders_12_male - copy nibrs_arrests_12 and drop females
+		3. nibrs_offenders_12m_county - add county_no to nibrs_arrests_12_male
+		4. nibrs_offenders_12mc_offenses - add charges
+		5. nibrs_offenders_12mc_offenses - code charges
+		6. nibrs_12m_oo_counties - group by county_no
+
+	NIBRS 2012 Offenders - Arrestees file (nibrs_offenders_arrests_12mzl_acs)
+		1. nibrs_offenders_arrests_12m - Full outer join nibrs_offenders_12m_county and nibrs_arrests_12m_county_nd on ori and incident
+		2. nibrs_offenders_arrests_12m - Add ori column based on offender_ori and arrest_ori
+		3. Make acs_zipcodes_13 in ipython notebook
+		4. acs_zipcodes_13_region_pres12 - join with region, county_no, state, and voting data from crosswalk
+		6. acs_zipcodes_13_rp_lemas - join with lemas 13 data
+		5. nibrs_offenders_arrests_12m_acs_rpl - Left outer join nibrs_offenders_arrests_12mz with acs_zipcodes_13_rp_lemas
+
+	NIBRS 2013 Arrests file
+		Clean nibrs_arrests_2013
+		Add LEMAS data by ORI
+		Add zip code by ORI
+		Add zip code demographics
+
+Analysis Code
+	Setup_Dataset - import as python module, code race, police, ACS data - code I will change more often
+
+
+
+Jail.com
+	recent_api - get data using API
+	make_dataset - import as module, cleans data
+	make_jail - use make_dataset and general_clean to make CSV data
+	Jail SQL - prepare SQL table
+	import CSV into PGAdmin, combine with other datasets
+		

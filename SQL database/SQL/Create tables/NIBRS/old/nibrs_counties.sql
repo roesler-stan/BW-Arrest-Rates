@@ -1,0 +1,73 @@
+﻿-- Table: nibrs_counties
+
+-- DROP TABLE nibrs_counties;
+
+CREATE TABLE nibrs_counties
+(
+  nibrs_county_no character varying NOT NULL,
+  nibrs_age double precision,
+  nibrs_offender_count double precision,
+  nibrs_offense_count_sum double precision,
+  nibrs_offense_count_avg double precision,
+  nibrs_number_offenses_avg double precision,
+  nibrs_burglary double precision,
+  nibrs_forgery double precision,
+  nibrs_drugs_narcotics double precision,
+  nibrs_embezzlement double precision,
+  nibrs_murder double precision,
+  nibrs_auto_theft double precision,
+  nibrs_robbery double precision,
+  nibrs_forcible_rape double precision,
+  nibrs_stolen_property double precision,
+  nibrs_assault_general double precision,
+  nibrs_drugs_general double precision,
+  nibrs_fraud_general double precision,
+  nibrs_homicide_general double precision,
+  nibrs_theft_general double precision,
+  w_nibrs_county_no character varying,
+  w_nibrs_age double precision,
+  w_nibrs_offender_count double precision,
+  w_nibrs_offense_count_sum double precision,
+  w_nibrs_offense_count_avg double precision,
+  w_nibrs_number_offenses_avg double precision,
+  w_nibrs_burglary double precision,
+  w_nibrs_forgery double precision,
+  w_nibrs_drugs_narcotics double precision,
+  w_nibrs_embezzlement double precision,
+  w_nibrs_murder double precision,
+  w_nibrs_auto_theft double precision,
+  w_nibrs_robbery double precision,
+  w_nibrs_forcible_rape double precision,
+  w_nibrs_stolen_property double precision,
+  w_nibrs_assault_general double precision,
+  w_nibrs_drugs_general double precision,
+  w_nibrs_fraud_general double precision,
+  w_nibrs_homicide_general double precision,
+  w_nibrs_theft_general double precision,
+  b_nibrs_county_no character varying,
+  b_nibrs_age double precision,
+  b_nibrs_offender_count double precision,
+  b_nibrs_offense_count_sum double precision,
+  b_nibrs_offense_count_avg double precision,
+  b_nibrs_number_offenses_avg double precision,
+  b_nibrs_burglary double precision,
+  b_nibrs_forgery double precision,
+  b_nibrs_drugs_narcotics double precision,
+  b_nibrs_embezzlement double precision,
+  b_nibrs_murder double precision,
+  b_nibrs_auto_theft double precision,
+  b_nibrs_robbery double precision,
+  b_nibrs_forcible_rape double precision,
+  b_nibrs_stolen_property double precision,
+  b_nibrs_assault_general double precision,
+  b_nibrs_drugs_general double precision,
+  b_nibrs_fraud_general double precision,
+  b_nibrs_homicide_general double precision,
+  b_nibrs_theft_general double precision,
+  CONSTRAINT nibrs_counties_pkey PRIMARY KEY (nibrs_county_no)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE nibrs_counties
+  OWNER TO roesler;

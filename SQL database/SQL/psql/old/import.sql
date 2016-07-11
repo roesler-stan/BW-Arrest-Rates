@@ -1,0 +1,1 @@
+﻿\copy nibrs_offenders_12mco_nd FROM '../Data/SQL Output/nibrs_offenders_12mco_nd.csv' CSV HEADER;

@@ -1,0 +1,1 @@
+﻿DELETE FROM mugshots_charges_may2015 WHERE mugshots_charges_may2015.charge IS NULL;

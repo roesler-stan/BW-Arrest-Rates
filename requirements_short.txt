@@ -1,0 +1,14 @@
+ggplot==0.6.8
+matplotlib==1.5.1
+numpy==1.10.4
+pandas==0.17.1
+python-dateutil==2.4.2
+
+re
+math
+datetime
+csv
+
+
+RStudio
+R packages listed as libraries
