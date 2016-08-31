@@ -2,23 +2,23 @@
 # Assumes that NIBRS, LEMAS, and crosswalk files are in their respective folders
 
 # # Clean CQPress voting data
-# python clean_pres12.py
+python clean_pres12.py
 
 # # Crosswalk files from https://www.icpsr.umich.edu/icpsrweb/DSDR/studies/4634
-# python clean_crosswalk.py
+python clean_crosswalk.py
 
 # # Create LEMAS 2007 and 2013 files, making lemas_07.csv, lemas_13.csv, and lemas_13_clean.csv
-# python create_lemas.py
+python create_lemas.py
 
 # # Clean ACS files to create acs_counties_13.csv
-# python acs_counties.py
+python acs_counties.py
 
 # # Convert NIBRS 2013 offenders .txt file to offenders_2013_raw.csv and offenders_2013.csv
-# python clean_raw_nibrs.py
+python clean_raw_nibrs.py
 
 # # Merge datasets, creating offenders_2013_caplg_ucr.csv
 # # I did this on Corn in case it wouldn't work on my local computer
-# python merge_sql_corn.py
+python merge_sql_corn.py
 
 # Clean merged dataset, make offenders_2013_caplg_ucr_clean1.csv
 python clean_merged.py
