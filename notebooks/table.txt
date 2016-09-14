@@ -1,0 +1,37 @@
+
+==========================================================
+                                         Model 1  Model 2 
+----------------------------------------------------------
+const                                    -0.62*** -0.74***
+                                         (0.04)   (0.08)  
+black_not_white                          -0.56*** -0.51***
+                                         (0.04)   (0.05)  
+w_officers_percent                       0.18***  0.23*** 
+                                         (0.04)   (0.04)  
+black_not_white_times_w_officers_percent 0.02     -0.04   
+                                         (0.04)   (0.04)  
+victim_analyzing_male                             -0.03   
+                                                  (0.03)  
+victim_analyzing_interracial                      0.14*** 
+                                                  (0.04)  
+victim_analyzing_known                            0.61*** 
+                                                  (0.04)  
+offense_in_residence1                             -0.05   
+                                                  (0.04)  
+male_officers_percent                             -0.05   
+                                                  (0.03)  
+agency_bdgt_per_offender                          0.14*** 
+                                                  (0.03)  
+com_bt                                            -0.23***
+                                                  (0.06)  
+tech_typ_vpat                                     0.30*** 
+                                                  (0.04)  
+hir_trn_no_p                                      0.08    
+                                                  (0.05)  
+min_hiring_educ_gths                              0.01    
+                                                  (0.05)  
+AIC                                      23324    22933   
+N                                        20595    20595   
+==========================================================
+Standard errors in parentheses.
+* p<.1, ** p<.05, ***p<.01
