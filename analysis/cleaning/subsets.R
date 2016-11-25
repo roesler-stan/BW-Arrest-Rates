@@ -1,5 +1,4 @@
-black_offenders <- subset(dataset, black_not_white == 1)
-white_offenders <- subset(dataset, black_not_white == 0)
+# Make subsets for each offense, excluding anyone who was arrested for an offense other than the one examined
 
 simple_assault_data <- subset(dataset, offense_simple_assault == 1)
 simple_assault_data <- subset(simple_assault_data, arrested == 0 | arrest_simple_assault == 1)
@@ -27,3 +26,6 @@ drug_equipment_data <- subset(drug_equipment_data, arrested == 0 | arrest_drug_e
 
 weapon_data <- subset(dataset, offense_weapon == 1)
 weapon_data <- subset(weapon_data, arrested == 0 | arrest_weapon == 1)
+
+black_offenders <- subset(dataset, black_not_white == 1)
+white_offenders <- subset(dataset, black_not_white == 0)

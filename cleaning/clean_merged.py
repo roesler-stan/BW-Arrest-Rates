@@ -39,12 +39,14 @@ def main():
                 row = code_offenses(row)
                 row = offender_race(row)
                 row = clean_dates(row)
-                row = victim_vars(row)                
+                row = victim_vars(row)
                 writer.writerow(row)
 
 def fix_thousands(row):
-    thouvars = ['mean_inc', 'total_residents', 'male_residents', 'pay_sal_ofcr_min', 'pay_sal_ofcr_max', 'pay_sal_sgt_min',
-    'pay_sal_sgt_max', 'pay_sal_exc_min', 'pay_sal_exc_max']
+    thouvars = ['mean_inc', 'pay_sal_ofcr_min', 'pay_sal_ofcr_max', 'pay_sal_sgt_min', 'pay_sal_sgt_max', 'pay_sal_exc_min', 'pay_sal_exc_max']
+    resident_vars = ['total_residents', 'b_residents', 'mi_residents', 'h_residents', 'a_residents', 'm_residents', 'mt_residents',
+    'w_residents', 'i_residents', 'o_residents']
+    thouvars += resident_vars
 
     for var in thouvars:
         row[var] = force_float(row[var]) / 1000

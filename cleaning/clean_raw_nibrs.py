@@ -15,7 +15,7 @@ def main():
     outfile_raw = directory + 'offenders_2013_raw.csv'
     outfile_clean = directory + 'offenders_2013.csv'
 
-    # raw_offenders(infile, outfile_raw)
+    raw_offenders(infile, outfile_raw)
     clean_offenders(infile, outfile_clean, state_fips_file)
 
 def raw_offenders(infile, outfile):

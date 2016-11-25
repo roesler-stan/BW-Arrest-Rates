@@ -9,11 +9,11 @@ setwd("~/Dropbox/Projects/Mugshots Project/Code/analysis/plots")
 source("grid_arrange_legend.R")
 setwd("~/Dropbox/Projects/Mugshots Project/Output/plots")
 
-subsets_list <- list("All Crimes" = dataset,
-                     "Simple Assault" = simple_assault_data,
+subsets_list <- list("Robbery" = robbery_data,
                      "Aggravated Assault" = aggravated_assault_data,
+                     "Simple Assault" = simple_assault_data,
                      "Intimidation" = intimidation_data,
-                     "Robbery" = robbery_data,
+                     "Weapon" = weapon_data,
                      "Shoplifting" = shoplifting_data,
                      "Vandalism" = vandalism_data,
                      "Drugs / Narcotics" = drugs_narcotics_data,
@@ -71,7 +71,7 @@ raw_plots_grid <- grid_arrange_shared_legend(raw_plots_list[[1]], raw_plots_list
 
 g <- arrangeGrob(raw_plots_grid, top = textGrob('Offenders Arrested by Offender Race and Agency Percent Officers White'))
 
-g2 <- arrangeGrob(g, sub = textGrob("Note: Data are from merged data set, particularly 2013 NIBRS offenders data and 2013 LEMAS police data. Offenders arrested for offenses other than the offense examined are omitted.\nLines are generalized additive models (GAM) fit to the observations, with 95% confidence intervals shaded gray.",
+g2 <- arrangeGrob(g, sub = textGrob("Note: Data are from 2013 NIBRS offenders data and 2013 LEMAS police data. Offenders arrested for offenses other than the offense examined are omitted.\nLines are generalized additive models (GAM) fit to the observations, with 95% confidence intervals shaded gray.",
                                     x = unit(0.02, "npc"), just = "left",
                                     gp = gpar(fontsize = 10)), nrow = 2, heights = c(20, 1))
 

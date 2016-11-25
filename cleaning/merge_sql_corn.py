@@ -21,8 +21,8 @@ def main():
     ucr13_file = 'ucr13_arrests_offenses.csv'
 
     # Delete old versions of the database file
-    # if os.path.exists(database_file):
-    #     os.remove(database_file)
+    if os.path.exists(database_file):
+        os.remove(database_file)
 
     conn = sqlite3.connect(database_file)
     conn.row_factory = sqlite3.Row

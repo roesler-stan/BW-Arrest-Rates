@@ -30,7 +30,7 @@ def add_vars(outfile_13, outfile_13_clean):
         headers = row.keys()
 
     new_vars = ['w_officers_percent', 'b_officers_percent', 'male_officers_percent', 'male_officers_ft_percent', 'min_hiring_educ',
-    'min_hiring_educ_gths']
+    'min_hiring_educ_gths', 'wofficers_divres', 'bofficers_divres']
 
     with open(outfile_13_clean, 'w') as outf:
         writer = csv.DictWriter(outf, fieldnames = headers + new_vars)

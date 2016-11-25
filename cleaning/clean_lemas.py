@@ -55,7 +55,7 @@ def calc_police(row):
         row['min_hiring_educ_gths'] = 1
 
     if row['bdgt_ttl']:
-        row['bdgt_ttl'] = row['bdgt_ttl'] / 1000000
+        row['bdgt_ttl'] = row['bdgt_ttl'] / (1000 * 1000)
 
     return row
 
