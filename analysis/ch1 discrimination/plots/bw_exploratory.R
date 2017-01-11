@@ -1,5 +1,3 @@
-source("~/Dropbox/Projects/Mugshots Project/Code/analysis/set up.R")
-
 library(ggplot2)
 library(reshape2)
 library(plyr)
@@ -9,7 +7,7 @@ library(RColorBrewer)
 
 setwd("~/Dropbox/Projects/Mugshots Project/Code/analysis/plots")
 source("grid_arrange_legend.R")
-setwd("~/Dropbox/Projects/Mugshots Project/Output/plots")
+setwd("~/Dropbox/Projects/Mugshots Project/Output/ch1 discrimination/plots")
 
 subsets_list <- list("Robbery" = robbery_data,
                      "Aggravated Assault" = aggravated_assault_data,

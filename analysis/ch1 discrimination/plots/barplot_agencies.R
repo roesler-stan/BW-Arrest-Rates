@@ -3,9 +3,9 @@ library(plyr)
 library(reshape)
 library(grid)
 library(gridExtra)
-library("RColorBrewer")
+library(RColorBrewer)
 
-setwd("~/Dropbox/Projects/Mugshots Project/Output/plots")
+setwd("~/Dropbox/Projects/Mugshots Project/Output/ch1 discrimination/plots")
 
 subsets_list <- list("Robbery" = robbery_data,
                      "Aggravated Assault" = aggravated_assault_data,
@@ -46,18 +46,18 @@ df$Offense <- factor(df$Offense, levels = names(subsets_list))
 p <- ggplot(df, aes(x = Offense, y = mean_arrested, fill = factor(black_not_white))) +
   geom_bar(stat = "identity", position = "dodge") +
   ylab("Percent Arrested") + xlab("Offense") +
-  ggtitle("Agencies' Percent Black and White Offenders Arrested") + theme_bw() +
+  ggtitle("Agencies' Percent Black and White Offenders Arrested") + theme_classic() +
   ylim(0, 100) + scale_fill_brewer(name = "Offender Race", palette = "OrRd") +
-  theme(axis.text.x = element_text(size = 12, angle = 45, vjust = 0.5),
-        axis.title = element_text(size = 16),
-        plot.title = element_text(size = 18)) +
+  theme(axis.text.x = element_text(angle = 45, vjust = 0.5),
+        plot.title = element_text(hjust = 0.5), text = element_text(family="serif"),
+        legend.background = element_rect(colour = "gray")) +
   geom_text(data = df[df$black_not_white == 'White',],
-            aes(label = round(mean_arrested, 0), hjust = 1.9, vjust = -0.5), size = 4) +
+            aes(label = round(mean_arrested, 0), hjust = 1.9, vjust = -0.5, family="serif"), size = 2.5) +
   geom_text(data = df[df$black_not_white == 'Black',],
-            aes(label = round(mean_arrested, 0), hjust = -0.7, vjust = -0.5), size = 4)
+            aes(label = round(mean_arrested, 0), hjust = -0.7, vjust = -0.5, family="serif"), size = 2.5)
 
-g <- arrangeGrob(p, sub = textGrob("Note: Data are from 2013 NIBRS offenders data. Offenders arrested for offenses other than the offense examined are omitted, as are police agencies with fewer than\n10 offenders for the given offense.",
+g <- arrangeGrob(p, sub = textGrob("Note: Data are from 2013 NIBRS offenders data. Offenders arrested for offenses other than the offense examined are omitted, as are police agencies with fewer than 10 offenders for the given offense.",
                                    x = unit(0.02, "npc"), just = "left",
-                                   gp = gpar(fontsize = 10)), nrow = 2, heights = c(20, 1))
+                                   gp = gpar(fontsize = 6, fontfamily="serif")), nrow = 2, heights = c(20, 1))
 
-ggsave("barplot_agency_arrest_rates.png", g, dpi = 400, width = 12, height = 10)
+ggsave("barplot_agency_arrest_rates.png", g, dpi = 400)

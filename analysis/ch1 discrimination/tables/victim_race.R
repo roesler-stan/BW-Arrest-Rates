@@ -1,0 +1,4 @@
+table(robbery_data_with_victim$victim_analyzing_interracial)
+table(aggravated_assault_data_with_victim$victim_analyzing_interracial)
+table(simple_assault_data_with_victim$victim_analyzing_interracial)
+table(intimidation_data_with_victim$victim_analyzing_interracial)

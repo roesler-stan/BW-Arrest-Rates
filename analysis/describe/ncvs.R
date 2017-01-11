@@ -39,5 +39,3 @@ table(df$V4285A) # 6 black, 8 white, 2 don't know, 24 residue
 # Reported to police
 table(df$V4399) # 2935 reported, 4725 not reported
 # Only 38% of crimes with victims are reported to the police!
-
-
