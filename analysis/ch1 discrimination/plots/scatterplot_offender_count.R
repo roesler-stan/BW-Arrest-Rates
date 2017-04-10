@@ -1,5 +1,4 @@
 library(ggplot2)
-library(reshape2)
 library(plyr)
 library(gridExtra)
 library(grid)
@@ -7,17 +6,9 @@ library(scales)
 
 setwd("~/Dropbox/Projects/Mugshots Project/Code/analysis/ch1 discrimination/plots")
 source("grid_arrange_legend.R")
+setwd("~/Dropbox/Projects/Mugshots Project/Code/analysis/cleaning")
+source("subsets_list.R")
 setwd("~/Dropbox/Projects/Mugshots Project/Output/ch1 discrimination/plots")
-
-subsets_list <- list("Robbery" = robbery_data,
-                     "Aggravated Assault" = aggravated_assault_data,
-                     "Simple Assault" = simple_assault_data,
-                     "Intimidation" = intimidation_data,
-                     "Weapon" = weapon_data,
-                     "Shoplifting" = shoplifting_data,
-                     "Vandalism" = vandalism_data,
-                     "Drugs / Narcotics" = drugs_narcotics_data,
-                     "Drug Equipment" = drug_equipment_data)
 
 plots_list <- lapply(seq_along(subsets_list), function(i) {
   subset_name <- names(subsets_list)[[i]]
@@ -30,16 +21,16 @@ plots_list <- lapply(seq_along(subsets_list), function(i) {
                   arrested = mean(arrested, na.rm=T) * 100)
   w_data <- ddply(subset(subset_data, black_not_white==0), .(ori), summarise,
                   arrested = mean(arrested, na.rm=T) * 100)
-  b_data$race = 'Black'
-  w_data$race = 'White'
+  b_data$black_not_white = 1
+  w_data$black_not_white = 0
   b_data <- merge(ori_data, b_data, by=c("ori"), how="outer")
   w_data <- merge(ori_data, w_data, by=c("ori"), how="outer")
   plot_data <- rbind(b_data, w_data)
   
-  p <- ggplot(plot_data, aes(x=offender_count, y=arrested, color=race)) +
+  p <- ggplot(plot_data, aes(x=offender_count, y=arrested, color=factor(black_not_white))) +
     geom_point(size=0.2) + geom_smooth(method="loess", se=F) +
     scale_x_log10(labels = comma) + theme_classic() +
-    scale_color_brewer(name = "Offender Race", palette="Accent") +
+    scale_color_brewer(name = "Offender Race", palette="Accent", labels=c("White", "Black")) +
     ylab("% Arrested") + xlab("Offenders") +
     theme(plot.title = element_text(hjust = 0.5),
           text = element_text(family="serif"),

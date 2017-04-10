@@ -18,7 +18,7 @@ dataset <- subset(dataset, sex == 'male')
 # Exclude anyone with an exceptional clearance (e.g. victim refused to cooperate): -6 means not exceptional
 dataset <- subset(dataset, cleared_exceptionally == -6)
 
-setwd("../cleaning")
+setwd("../Code/analysis/cleaning")
 source("create_vars.R")
 source("as_numeric.R")
 source("remove_na.R")

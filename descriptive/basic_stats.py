@@ -7,7 +7,7 @@ def basic_stats(nibrs_data, fips_county1_no_means, us_data, basic_file):
     f = file(basic_file, 'w')
     sys.stdout = f
 
-    print '% of US residents: ' + str(fips_county1_no_means['total_residents'].sum() / us_data['total_residents'].sum())
+    print '% of US residents: ' + str((fips_county1_no_means['total_residents'].sum() / us_data['total_residents'].sum()) * 100)
     print '\n'
 
     print '# of agencies with basic variables non-missing: ' + str(float(len(nibrs_data['ori'].unique())))
@@ -15,7 +15,7 @@ def basic_stats(nibrs_data, fips_county1_no_means, us_data, basic_file):
 
     print '# of US counties: ' + str(float(len(nibrs_data['fips_county1_no'].unique())))
     print '\n'
-    print '% of US counties: ' + str(float(len(nibrs_data['fips_county1_no'].unique())) / float(len(us_data['county_no'].unique())))
+    print '% of US counties: ' + str((float(len(nibrs_data['fips_county1_no'].unique())) / float(len(us_data['county_no'].unique()))) * 100)
     print '\n'
 
     print '# of non-hispanic black and white offenders: ' + str(len(nibrs_data.index))
@@ -26,11 +26,11 @@ def basic_stats(nibrs_data, fips_county1_no_means, us_data, basic_file):
     print '\n'
 
     print '% male and female'
-    print nibrs_data['sex'].value_counts() / nibrs_data['sex'].count().astype(float)
+    print (nibrs_data['sex'].value_counts() / nibrs_data['sex'].count().astype(float)) * 100
     print '\n'
 
     print '% offenders black, not white, excluding hispanics:'
-    print nibrs_data['black_not_white'].mean()
+    print (nibrs_data['black_not_white'].mean() * 100)
     print '\n'
 
     print '# of offenders with ethnicity known:'

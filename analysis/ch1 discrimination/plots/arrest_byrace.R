@@ -7,17 +7,9 @@ library(scales)
 
 setwd("~/Dropbox/Projects/Mugshots Project/Code/analysis/ch1 discrimination/plots")
 source("grid_arrange_legend.R")
+setwd("~/Dropbox/Projects/Mugshots Project/Code/analysis/cleaning")
+source("subsets_list.R")
 setwd("~/Dropbox/Projects/Mugshots Project/Output/ch1 discrimination/plots")
-
-subsets_list <- list("Robbery" = robbery_data,
-                     "Aggravated Assault" = aggravated_assault_data,
-                     "Simple Assault" = simple_assault_data,
-                     "Intimidation" = intimidation_data,
-                     "Weapon" = weapon_data,
-                     "Shoplifting" = shoplifting_data,
-                     "Vandalism" = vandalism_data,
-                     "Drugs / Narcotics" = drugs_narcotics_data,
-                     "Drug Equipment" = drug_equipment_data)
 
 plots_list <- lapply(seq_along(subsets_list), function(i) {
   subset_name <- names(subsets_list)[[i]]
@@ -31,9 +23,9 @@ plots_list <- lapply(seq_along(subsets_list), function(i) {
   plot_data <- merge(b_data, w_data)
   
   p <- ggplot(plot_data, aes(x=w_arrested, y=b_arrested)) +
-    geom_point(size=0.3) + guides(size=F) +
+    geom_point(size=0.3) + guides(size=F) + coord_fixed() +
     theme_classic() + xlab("% White Arrested") + ylab("% Black Arrested") +
-    theme(plot.title = element_text(hjust = 0.5),
+    theme(plot.title = element_text(hjust = 0.5, size=12),
           text = element_text(family="serif"),
           axis.title = element_text(size=10)) +
     ggtitle(subset_name) +
@@ -49,10 +41,12 @@ plots_grid <- grid.arrange(plots_list[[1]], plots_list[[2]],
                            plots_list[[7]], plots_list[[8]], plots_list[[9]],
                            ncol=3, nrow=3)
 
-g <- arrangeGrob(plots_grid, top = textGrob("Agencies' Percent Offenders Arrested by Race",
-                                            gp=gpar(fontsize=16, fontfamily="serif")))
-g2 <- arrangeGrob(g, sub = textGrob("Note: Data are from 2013 NIBRS, and each point represents a police agency. Red lines show where percentages are equivalent.\nOffenders arrested for offenses other than the offense examined are omitted, as are police agencies with fewer than 10 offenders for the given offense.",
-                                    x = unit(0.02, "npc"), just = "left",
-                                    gp = gpar(fontsize=7, fontfamily="serif")), nrow = 2, heights = c(20, 1))
+#g <- arrangeGrob(plots_grid, top=textGrob("Agencies' Percent Offenders Arrested by Race",
+#                                            gp=gpar(fontsize=14, fontfamily="serif")))
 
-ggsave("arrested_byrace.png", plot=g2, dpi=400)
+g2 <- arrangeGrob(plots_grid, sub=textGrob("Note: Data are from 2013 NIBRS, and offenders arrested for other offenses are omitted, as are police agencies\nwith fewer than 10 offenders.  Red lines show where percentages are equivalent.",
+                                    x = unit(0.05, "npc"), just="left",
+                                    gp = gpar(fontsize=9, fontfamily="serif")),
+                  nrow=2, heights = c(20, 2))
+
+ggsave("arrested_byrace.jpg", plot=g2, dpi=150)

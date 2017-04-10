@@ -2,7 +2,7 @@ import pandas
 import math
 
 def dems_table(fips_county1_no_means, us_data, pres12_data, dems_outfile):
-    residents = ['total_residents', 'b_residents_percent', 'w_residents_percent', 'male_residents', 'county_offenders_per_resident']
+    residents = ['total_residents', 'b_residents_percent', 'w_residents_percent', 'male_residents']
     inc_controls = ['mean_inc', 'binc_under10_percent', 'binc_under20_percent', 'binc_under40_percent',
     'winc_under10_percent', 'winc_under20_percent', 'winc_under40_percent','one_race_unemp', 'w_unemp', 'b_unemp']
     voting = ['pres12_reps_percent_total']
@@ -38,7 +38,7 @@ def dems_table(fips_county1_no_means, us_data, pres12_data, dems_outfile):
             us_counts_dict[var] = us_data[var].count().astype(float)
             
     # Mean Values Table
-    data_dict = {'Dataset Mean': n_ave_values, 'Dataset S.D.': n_std_values, 'Dataset N' : n_counts_dict,
+    data_dict = {'Data Set Mean': n_ave_values, 'Data Set S.D.': n_std_values, 'Data Set N' : n_counts_dict,
     'U.S. Mean': us_ave_values, 'U.S. S.D.': us_std_values, 'U.S. N': us_counts_dict}
     table_data = pandas.DataFrame(data_dict, index = [fips_county1_no_vars])
 
@@ -62,8 +62,7 @@ def dems_table(fips_county1_no_means, us_data, pres12_data, dems_outfile):
         'male_residents': 'Male Population', 'mean_inc': 'Mean Household Income (K)', 'one_race_unemp': 'Unemployment Rate (Single Race)',
         'pres12_reps_percent_total': '% Votes Republican', 'total_residents': 'Total Population', 'w_male': 'White Males',
         'w_residents_percent': '% Residents White', 'w_unemp': 'White Unemployment', 'winc_under10_percent': '% White Households < 10K',
-        'winc_under20_percent': '% White Households < 20K', 'winc_under40_percent': '% White Households < 40K',
-        'county_offenders_per_resident': 'Offenders per Resident'}
+        'winc_under20_percent': '% White Households < 20K', 'winc_under40_percent': '% White Households < 40K'}
 
     for oldvar, newvar in new_varnames.items():
         table_data.loc[table_data[''] == oldvar, ''] = newvar
@@ -71,11 +70,11 @@ def dems_table(fips_county1_no_means, us_data, pres12_data, dems_outfile):
     new_order = ['Total Population', 'Male Population', 'White Males',  'Black Males',  '% Residents White', '% Residents Black',
     '% Votes Republican', 'Unemployment Rate (Single Race)', 'White Unemployment',  'Black Unemployment', 'Mean Household Income (K)',
     '% White Households < 10K', '% Black Households < 10K', '% White Households < 20K', '% Black Households < 20K', '% White Households < 40K',
-    '% Black Households < 40K', 'Offenders per Resident']
+    '% Black Households < 40K']
 
     table_data[''] = pandas.Categorical(table_data[''], new_order)
     table_data = table_data.sort_values(by = '')
-    table_data = table_data[['', 'Dataset Mean', 'Dataset S.D.', 'Dataset N', 'U.S. Mean', 'U.S. S.D.', 'U.S. N']]
+    table_data = table_data[['', 'Data Set Mean', 'Data Set S.D.', 'Data Set N', 'U.S. Mean', 'U.S. S.D.', 'U.S. N']]
 
     with open (dems_outfile, 'w') as f:
         f.write(pandas.DataFrame.to_csv(table_data, float_format = '%.2f', index = False))

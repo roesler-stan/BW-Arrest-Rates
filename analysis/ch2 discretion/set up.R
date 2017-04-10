@@ -1,8 +1,7 @@
 rm(list = ls())
 options(scipen=999)
 
-# Use the same data as for chapter 1
-rfile <- "~/Dropbox/Projects/Mugshots Project/Data/ch1.RData"
+rfile <- "~/Dropbox/Projects/Mugshots Project/Data/ch2.RData"
 # Read the cleaned data from saved session
 load(rfile)
 
@@ -19,13 +18,15 @@ dataset <- subset(dataset, sex == 'male')
 # Exclude anyone with an exceptional clearance (e.g. victim refused to cooperate): -6 means not exceptional
 dataset <- subset(dataset, cleared_exceptionally == -6)
 
-setwd("~/Dropbox/Projects/Mugshots Project/Code/analysis/cleaning")
+setwd("../Code/analysis/cleaning")
 source("create_vars.R")
 source("as_numeric.R")
 source("remove_na.R")
-source("standardize_vars.R")
+
+setwd("../ch2 discretion")
+source("create_sameday.R")
 source("subsets.R")
-source("subsets with victims.R")
 source("remove_sparse.R")
+source("choose_subsets.R")
 
 save.image(rfile)

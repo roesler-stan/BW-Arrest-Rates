@@ -57,7 +57,7 @@ def write_offense_table_detailed(nibrs_data, offense_file_wofficers_divres, offe
     table_wofficers_divres['Offense to Sort'] = table_wofficers_divres['Offense'].map(find_order)
     table_wofficers_divres = table_wofficers_divres.sort_values(['Offense to Sort', 'White Officers per White Resident'], ascending = True)
     table_wofficers_divres = table_wofficers_divres[['Offense', 'White Officers per White Resident', 'Offense Count', 'Arrest Count',
-    'Arrest Rate', '% Offenders Black', '% Arrestees Black', '% Offenders / % Arrestees Black']]
+    '% Arrested', '% Offenders Black', '% Arrestees Black', '% Offenders / % Arrestees Black']]
  
     with open (offense_file_wofficers_divres, 'w') as f:
         f.write(pandas.DataFrame.to_csv(table_wofficers_divres, float_format = '%.2f', index = False))
@@ -83,7 +83,7 @@ def write_offense_table_detailed(nibrs_data, offense_file_wofficers_divres, offe
     table_w_officers_percent['Offense to Sort'] = table_w_officers_percent['Offense'].map(find_order)
     table_w_officers_percent = table_w_officers_percent.sort_values(['Offense to Sort', 'Percent Officers White'], ascending = True)
     table_w_officers_percent = table_w_officers_percent[['Offense', 'Percent Officers White', 'Offense Count', 'Arrest Count',
-    'Arrest Rate', '% Offenders Black', '% Arrestees Black', '% Offenders / % Arrestees Black']]
+    '% Arrested', '% Offenders Black', '% Arrestees Black', '% Offenders / % Arrestees Black']]
      
     with open (offense_file_w_officers_percent, 'w') as f:
         f.write(pandas.DataFrame.to_csv(table_w_officers_percent, float_format = '%.2f', index = False))
@@ -156,7 +156,7 @@ def offense_table(nibrs_data):
  
     index_vars_list = list(index_vars)
  
-    data_dict = {'Offense Count': offense_counts, 'Arrest Count': offender_arrest_counts, 'Arrest Rate': offense_arrest_rates,
+    data_dict = {'Offense Count': offense_counts, 'Arrest Count': offender_arrest_counts, '% Arrested': offense_arrest_rates,
     '% Offenders Black': offenders_bpercent, '% Arrestees Black': offender_arrests_bpercent, '% Offenders / % Arrestees Black': offenders_div_arrestees_bpercent}
     table_data = pandas.DataFrame(data_dict, index = index_vars_list)
  
@@ -172,5 +172,5 @@ def offense_table(nibrs_data):
     table_data['Offense'] = table_data['Offense'].replace(to_replace = '_', value = ' ', regex = True)
     table_data['Offense'] = table_data['Offense'].str.title()
  
-    table_data = table_data[['Offense', 'Offense Count', 'Arrest Count', 'Arrest Rate', '% Offenders Black', '% Arrestees Black', '% Offenders / % Arrestees Black']]
+    table_data = table_data[['Offense', 'Offense Count', 'Arrest Count', '% Arrested', '% Offenders Black', '% Arrestees Black', '% Offenders / % Arrestees Black']]
     return table_data

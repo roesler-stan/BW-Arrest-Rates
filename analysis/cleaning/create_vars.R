@@ -38,6 +38,7 @@ county_data$county_ftsworn_per_white_resident <- (county_data$ftsworn / county_d
 cols <- c("fips_county1_no", "county_ftsworn_per_resident",
           "county_ftsworn_per_black_resident", "county_ftsworn_per_white_resident")
 dataset <- merge(dataset, county_data[, cols], by = "fips_county1_no", all.x = T, all.y = F)
+county_data <- NULL
 
 
 # Create agency-level variable

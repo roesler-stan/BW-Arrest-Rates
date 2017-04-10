@@ -1,62 +1,55 @@
 library(ggplot2)
 library(plyr)
-library(reshape)
+library(RColorBrewer)
 library(grid)
 library(gridExtra)
-library(RColorBrewer)
 
+setwd("~/Dropbox/Projects/Mugshots Project/Code/analysis/cleaning")
+source("subsets_list.R")
 setwd("~/Dropbox/Projects/Mugshots Project/Output/ch1 discrimination/plots")
 
-robbery_arrested <- tapply(robbery_data$arrested, robbery_data$black_not_white, FUN = mean, na.rm=TRUE) * 100
-aggravated_assault_arrested <- tapply(aggravated_assault_data$arrested, aggravated_assault_data$black_not_white, FUN = mean, na.rm=TRUE) * 100
-simple_assault_arrested <- tapply(simple_assault_data$arrested, simple_assault_data$black_not_white, FUN = mean, na.rm=TRUE) * 100
-intimidation_arrested <- tapply(intimidation_data$arrested, intimidation_data$black_not_white, FUN = mean, na.rm=TRUE) * 100
-weapon_arrested <- tapply(weapon_data$arrested, weapon_data$black_not_white, FUN = mean, na.rm=TRUE) * 100
-shoplifting_arrested <- tapply(shoplifting_data$arrested, shoplifting_data$black_not_white, FUN = mean, na.rm=TRUE) * 100
-vandalism_arrested <- tapply(vandalism_data$arrested, vandalism_data$black_not_white, FUN = mean, na.rm=TRUE) * 100
-drugs_narcotics_arrested <- tapply(drugs_narcotics_data$arrested, drugs_narcotics_data$black_not_white, FUN = mean, na.rm=TRUE) * 100
-drug_equipment_arrested <- tapply(drug_equipment_data$arrested, drug_equipment_data$black_not_white, FUN = mean, na.rm=TRUE) * 100
+# Calculate the average arrest rates for black vs. white men
+plot_data <- data.frame()
+barplots_data_list <- lapply(seq_along(subsets_list), function(i) {
+  subset_ori <- ddply(subsets_list[[i]], .(black_not_white),
+                      summarise,
+                      mean_arrested = mean(arrested) * 100,
+                      sd_arrested = sd(arrested * 100),
+                      observations = sum(!is.na(arrested)))
+  subset_ori$offense <- names(subsets_list)[[i]]
+  if (nrow(plot_data) == 0) {
+    plot_data <<- subset_ori
+  } else {
+    plot_data <<- rbind(plot_data, subset_ori)
+  }
+})
 
-TAB <- rbind(robbery_arrested, aggravated_assault_arrested, simple_assault_arrested,
-             intimidation_arrested, weapon_arrested,
-             shoplifting_arrested, vandalism_arrested, drugs_narcotics_arrested, drug_equipment_arrested)
+plot_data$offense <- factor(plot_data$offense, levels = names(subsets_list))
 
-df <- data.frame(TAB)
-df <- rename(df, c("X0" = "White", "X1" = "Black"))
-df <- t(df)
+plot_data$se_arrested <- plot_data$sd_arrested / sqrt(plot_data$observations)
+plot_data$min_arrested <- plot_data$mean_arrested - plot_data$se_arrested
+plot_data$max_arrested <- plot_data$mean_arrested + plot_data$se_arrested
 
-Names <- names(df)
-df.m <- melt(df, id.vars = Names)
-
-df.m$X2 <- factor(df.m$X2,
-                  levels = c("robbery_arrested", "aggravated_assault_arrested",
-                             "simple_assault_arrested", "intimidation_arrested",  "weapon_arrested",
-                             "shoplifting_arrested", "vandalism_arrested",
-                             "drugs_narcotics_arrested", "drug_equipment_arrested"),
-                  labels = c("Robbery", "Aggravated Assault", "Simple Assault", "Intimidation",
-                             "Weapon", "Shoplifting", "Vandalism", "Drugs / Narcotics", "Drug Equipment"))
-
-table_X2 <- table(df.m$X2)
-x_levels <- names(table_X2)[order(table_X2)]
-df.m$X2 <- factor(df.m$X2, levels = x_levels)
-df.m$X1 <- factor(df.m$X1, levels = c('White', 'Black'))
-
-
-p <- ggplot(df.m, aes(X2, value)) +
-  geom_bar(aes(fill = X1), position = "dodge", stat="identity") +
-  ylab("Percent Arrested") + xlab("Offense") +
-  ggtitle("Percent Black and White Offenders Arrested") + theme_classic() +
-  ylim(0, 100) + scale_fill_brewer(name = "Offender Race", palette = "OrRd") +
+p <- ggplot(plot_data, aes(x=offense, y=mean_arrested,
+                           fill=factor(black_not_white))) +
+  geom_bar(stat="identity", position="dodge") + theme_classic() +
+  ylab("Percent Arrested") + xlab("Offense") + ylim(0, 100) +
+  #ggtitle("Percent Male Offenders Arrested") + 
   theme(axis.text.x = element_text(angle = 45, vjust = 0.5),
-        plot.title = element_text(hjust = 0.5), text = element_text(family="serif"),
+        plot.title = element_text(hjust = 0.6), text = element_text(family="serif"),
         legend.background = element_rect(colour = "gray")) +
-  geom_text(data = df.m[df.m$X1 == 'White',],
-            aes(label = round(value, 0), hjust = 1.9, vjust = -0.5, family="serif"), size=2.5) +
-  geom_text(data = df.m[df.m$X1 == 'Black',],
-            aes(label = round(value, 0), hjust = -0.7, vjust = -0.5, family="serif"), size=2.5)
+  geom_text(data = plot_data[plot_data$black_not_white == 0,],
+            aes(label = round(mean_arrested, 0), hjust = 1.7, vjust = -0.5, family="serif"), size=3) +
+  geom_text(data = plot_data[plot_data$black_not_white == 1,],
+            aes(label = round(mean_arrested, 0), hjust = -0.6, vjust = -0.5, family="serif"), size=3) +
+  geom_errorbar(aes(x=offense, ymin=min_arrested, ymax=max_arrested),
+                colour="gray", position="dodge") +
+  scale_fill_brewer(name = "Offender Race", palette = "OrRd", labels=c("White", "Black")) +
+  guides(color=F)
 
-g <- arrangeGrob(p, sub = textGrob("Note: Data are from 2013 NIBRS offenders data. Offenders arrested for offenses other than the offense examined are omitted, as are police agencies with fewer than 10 offenders for the given offense.",
-                                   x = unit(0.02, "npc"), just = "left",
-                                   gp = gpar(fontsize = 6, fontfamily="serif")), nrow = 2, heights = c(20, 1))
+g <- arrangeGrob(p, sub = textGrob("Note: Data are from 2013 NIBRS, and only black and white male offenders are included. Agencies with fewer than 10 offenders\nfor the given offense are excluded, as are offenders arrested for offenses other than the offense examined. Standard errors are shown in gray.",
+                                   x = unit(0.05, "npc"), just = "left",
+                                   gp = gpar(fontsize = 9, fontfamily="serif")),
+                 nrow=2, heights = c(20, 2))
 
-ggsave("barplot_arrest_rates.png", g, dpi = 400)
+ggsave("barplot_arrest_rates.jpg", g, dpi=150)
